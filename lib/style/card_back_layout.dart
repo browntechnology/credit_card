@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CardBackLayout {
-  String cvv;
-  double width;
-  double height;
-  Color color;
+  final String cvv;
+  final double width;
+  final double height;
+  final Color color;
 
-  CardBackLayout({this.cvv, this.width, this.height, this.color});
+  CardBackLayout({
+    required this.cvv,
+    required this.width,
+    required this.height,
+    required this.color,
+  });
 
   Widget layout1() {
     return Column(
@@ -41,10 +46,7 @@ class CardBackLayout {
                 child: Text(
                   cvv.toString(),
                   style: TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w500,
-                    color: color
-                  ),
+                      fontSize: 21, fontWeight: FontWeight.w500, color: color),
                 ),
               ),
             ),

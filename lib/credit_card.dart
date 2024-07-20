@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:awesome_card_zh/awesome_card.dart';
 import 'package:awesome_card_zh/extra/helper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreditCard extends StatefulWidget {
@@ -16,34 +15,32 @@ class CreditCard extends StatefulWidget {
   final bool showBackSide;
   final Widget frontBackground;
   final Widget backBackground;
-  final Widget frontLayout;
-  final Widget backLayout;
+  final Widget? frontLayout;
+  final Widget? backLayout;
   final bool showShadow;
   final CardType cardType;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
 
-  CreditCard(
-      {Key key,
-      this.cardNumber,
-      this.cardExpiry,
-      this.cardHolderName,
-      this.bankName = "",
-      this.cvv,
-      this.showBackSide = false,
-      @required this.frontBackground,
-      @required this.backBackground,
-      this.cardType,
-      this.frontLayout,
-      this.backLayout,
-      this.frontTextColor = Colors.white,
-      this.backTextColor = Colors.black,
-      this.showShadow = false,
-      this.width,
-      this.height})
-      : assert(frontBackground != null),
-        assert(backBackground != null),
-        super(key: key);
+  CreditCard({
+    Key? key,
+    required this.frontBackground,
+    this.showBackSide = false,
+    required this.backBackground,
+    this.bankName = "",
+    this.frontTextColor = Colors.white,
+    this.backTextColor = Colors.black,
+    this.showShadow = false,
+    this.width,
+    this.height,
+    this.frontLayout,
+    required this.cardNumber,
+    required this.cardExpiry,
+    required this.cardHolderName,
+    required this.cvv,
+    required this.cardType,
+    this.backLayout,
+  }) : super(key: key);
 
   @override
   _CreditCardState createState() => _CreditCardState();
@@ -51,11 +48,11 @@ class CreditCard extends StatefulWidget {
 
 class _CreditCardState extends State<CreditCard>
     with SingleTickerProviderStateMixin {
-  double cardWidth;
-  double cardHeight;
-  AnimationController _controller;
-  Animation<double> _moveToBack;
-  Animation<double> _moveToFront;
+  late double cardWidth;
+  late double cardHeight;
+  late final AnimationController _controller;
+  late final Animation<double> _moveToBack;
+  late final Animation<double> _moveToFront;
 
   @override
   void initState() {
@@ -98,10 +95,10 @@ class _CreditCardState extends State<CreditCard>
   Widget build(BuildContext context) {
     widget.width == null
         ? cardWidth = MediaQuery.of(context).size.width - 40
-        : cardWidth = widget.width;
+        : cardWidth = widget.width!;
     widget.height == null
         ? cardHeight = (cardWidth / 2) + 10
-        : cardHeight = widget.height;
+        : cardHeight = widget.height!;
 
     if (widget.showBackSide) {
       _controller.forward().orCancel;
@@ -216,19 +213,22 @@ class AwesomeCard extends StatelessWidget {
   final Animation<double> animation;
   final Widget child;
 
-  AwesomeCard({@required this.animation, @required this.child});
+  AwesomeCard({
+    required this.animation,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: animation,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? _) {
         return Transform(
           transform: Matrix4.identity()
             ..setEntry(3, 2, 0.001)
             ..rotateY(animation.value),
           alignment: Alignment.center,
-          child: this.child,
+          child: child,
         );
       },
     );

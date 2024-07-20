@@ -9,16 +9,19 @@ class CardFrontLayout {
   double cardWidth;
   double cardHeight;
   Color textColor;
-
-  CardFrontLayout(
-      {this.bankName = "",
-      this.cardNumber = "",
-      this.cardExpiry = "",
-      this.cardHolderName = "",
-      this.cardTypeIcon,
-      this.cardWidth = 0,
-      this.cardHeight = 0,
-      this.textColor});
+  TextStyle? cardHolderNameStyle;
+  TextStyle? cardExpiryStyle;
+  CardFrontLayout({
+    this.bankName = "",
+    required this.cardNumber,
+    required this.cardExpiry,
+    required this.cardHolderName,
+    required this.cardTypeIcon,
+    required this.textColor,
+    this.cardHolderNameStyle,
+    this.cardWidth = 0,
+    this.cardHeight = 0,
+  });
 
   Widget layout1() {
     return Padding(
@@ -74,9 +77,7 @@ class CardFrontLayout {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        cardNumber == null || cardNumber.isEmpty
-                            ? 'XXXX XXXX XXXX XXXX'
-                            : cardNumber,
+                        cardNumber.isEmpty ? 'XXXX XXXX XXXX XXXX' : cardNumber,
                         style: TextStyle(
                             package: 'awesome_card_zh',
                             color: textColor,
@@ -102,32 +103,38 @@ class CardFrontLayout {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            cardExpiry == null || cardExpiry.isEmpty
-                                ? "MM/YY"
-                                : cardExpiry,
+                          DefaultTextStyle.merge(
                             style: TextStyle(
-                                package: 'awesome_card_zh',
-                                color: textColor,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "MavenPro",
-                                fontSize: 16),
+                              package: 'awesome_card_zh',
+                              color: textColor,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "MavenPro",
+                              fontSize: 16,
+                            ),
+                            child: Text(
+                              cardExpiry.isEmpty ? "MM/YY" : cardExpiry,
+                              style: cardExpiryStyle,
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(
                         height: 15,
                       ),
-                      Text(
-                        cardHolderName == null || cardHolderName.isEmpty
-                            ? "Card Holder"
-                            : cardHolderName,
+                      DefaultTextStyle.merge(
                         style: TextStyle(
-                            package: 'awesome_card_zh',
-                            color: textColor,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "MavenPro",
-                            fontSize: 17),
+                          package: 'awesome_card_zh',
+                          color: textColor,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "MavenPro",
+                          fontSize: 17,
+                        ),
+                        child: Text(
+                          cardHolderName.isEmpty
+                              ? "Card Holder"
+                              : cardHolderName,
+                          style: cardHolderNameStyle,
+                        ),
                       ),
                     ],
                   ),

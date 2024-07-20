@@ -1,7 +1,7 @@
 import 'package:awesome_card_zh/extra/card_type.dart';
 import 'package:flutter/material.dart';
 
-Widget getCardTypeIcon({CardType cardType, String cardNumber}) {
+Widget getCardTypeIcon({CardType? cardType, required String cardNumber}) {
   switch (cardType == null ? getCardType(cardNumber) : cardType) {
     case CardType.americanExpress:
       return Image.asset(
@@ -129,5 +129,3 @@ CardType getCardType(String cardNumber) {
 
   return CardType.other;
 }
-
-
